@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - RIBEL</title>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        :root {
+            --primary: #2ecc71;
+            --primary-dark: #27ae60;
+            --primary-light: #58d68d;
+        }
+
+        body {
+            min-height: 100vh;
+            display: flex;
+            background: linear-gradient(135deg, #1a3d1a 0%, #145a32 50%, #0d3d1a 100%);
+            overflow: hidden;
+        }
+
+        .left-panel {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 40px;
+            background: transparent;
+            position: relative;
+        }
+
+        .left-panel::before {
+            content: '';
+            position: absolute;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(46,204,113,0.2) 0%, transparent 70%);
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            animation: pulse 4s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.5; }
+            50% { transform: translate(-50%, -50%) scale(1.2); opacity: 0.8; }
+        }
+
+        .school-name {
+            font-family: 'Bebas Neue', sans-serif;
+            color: white;
+            font-size: 120px;
+            letter-spacing: 15px;
+            margin-bottom: 20px;
+            position: relative;
+            z-index: 1;
+            text-shadow: 0 4px 30px rgba(0,0,0,0.3);
+            line-height: 1;
+        }
+
+        .left-panel p {
+            color: rgba(255,255,255,0.8);
+            font-size: 18px;
+            font-weight: 300;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            margin-bottom: 10px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .mascota {
+            width: 280px;
+            animation: float 3s ease-in-out infinite;
+            filter: drop-shadow(0 10px 20px rgba(0,0,0,0.4));
+            z-index: 1;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .mascota:hover {
+            transform: scale(1.15);
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-30px); }
+        }
+
+        .right-panel {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 40px;
+            background: white;
+        }
+
+        .login-container {
+            width: 100%;
+            max-width: 420px;
+        }
+
+        .login-container h2 {
+            color: #1a3d1a;
+            font-size: 32px;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .login-container .subtitle {
+            color: #666;
+            font-weight: 400;
+            margin-bottom: 40px;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        .form-group label {
+            display: block;
+            color: #1a3d1a;
+            font-size: 13px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 8px;
+        }
+
+        .form-group label .note {
+            color: #666;
+            font-size: 11px;
+            font-weight: 400;
+            text-transform: none;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 16px 20px;
+            border: 2px solid #e0e0e0;
+            border-radius: 12px;
+            font-size: 15px;
+            transition: all 0.3s ease;
+            background: #f8f9fa;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: #2ecc71;
+            background: white;
+            box-shadow: 0 0 0 4px rgba(46,204,113,0.15);
+        }
+
+        .form-options {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .remember-me {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .remember-me input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            accent-color: #2ecc71;
+        }
+
+        .remember-me label {
+            color: #666;
+            font-size: 14px;
+            font-weight: 400;
+            text-transform: none;
+        }
+
+        .forgot-password {
+            color: #2ecc71;
+            font-size: 14px;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .forgot-password:hover {
+            text-decoration: underline;
+        }
+
+        .login-btn {
+            width: 100%;
+            padding: 18px;
+            background: linear-gradient(135deg, #2ecc71, #58d68d);
+            border: none;
+            border-radius: 14px;
+            color: white;
+            font-size: 15px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(46,204,113,0.35);
+        }
+
+        .login-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(46,204,113,0.45);
+        }
+
+        .error-message {
+            background: rgba(46,204,113,0.1);
+            border: 1px solid #2ecc71;
+            color: #27a860;
+            padding: 14px 18px;
+            border-radius: 10px;
+            font-size: 14px;
+            margin-bottom: 20px;
+            display: none;
+        }
+
+        .error-message.show {
+            display: block;
+        }
+
+        @media (max-width: 900px) {
+            body {
+                flex-direction: column;
+            }
+            .left-panel {
+                padding: 40px 20px;
+            }
+            .school-name {
+                font-size: 72px;
+                letter-spacing: 8px;
+            }
+            .mascota {
+                width: 180px;
+            }
+            .left-panel p {
+                display: none;
+            }
+            .right-panel {
+                padding: 40px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="left-panel">
+        <h1 class="school-name">RIBEL</h1>
+        <p>Sistema de Gestion Escolar</p>
+        <img src="mascota.png" alt="Mascota" class="mascota">
+    </div>
+
+    <div class="right-panel">
+        <div class="login-container">
+            <h2>Bienvenido</h2>
+            <p class="subtitle">Ingresa tus credenciales para acceder</p>
+
+            <div class="error-message" id="errorMessage">
+                Correo o contrasenia incorrectos. Intenta nuevamente.
+            </div>
+
+            <form id="loginForm">
+                <div class="form-group">
+                    <label>Correo Institucional <span class="note">(no personal)</span></label>
+                    <input type="email" id="email" placeholder="24040123@RIBEL.MX" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Contrasena</label>
+                    <input type="password" id="password" placeholder="********" required>
+                </div>
+
+                <div class="form-options">
+                    <div class="remember-me">
+                        <input type="checkbox" id="remember">
+                        <label for="remember">Recordarme</label>
+                    </div>
+                    <a href="#" class="forgot-password">Olvidaste tu contrasena?</a>
+                </div>
+
+                <button type="submit" class="login-btn">Iniciar Sesion</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const email = document.getElementById('email').value.trim();
+            const password = document.getElementById('password').value;
+            
+            if (email === '24040123@RIBEL.MX' && password === '24040123') {
+                localStorage.setItem('loggedIn', 'true');
+                localStorage.setItem('userEmail', email);
+                window.location.href = 'asignacion-maestros.html';
+            } else {
+                document.getElementById('errorMessage').classList.add('show');
+            }
+        });
+        
+        if (localStorage.getItem('loggedIn') === 'true') {
+            window.location.href = 'asignacion-maestros.html';
+        }
+    </script>
+</body>
+</html>

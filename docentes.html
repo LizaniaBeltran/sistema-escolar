@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Docentes - RIBEL</title>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="../../assets/css/global.css" rel="stylesheet">
+    <link href="docentes.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Top Menu -->
+    <header class="top-menu">
+        <div class="top-menu-left">
+            <h1 class="logo">RIBEL</h1>
+        </div>
+        <nav class="top-menu-nav">
+            <a href="#" class="active">Docentes</a>
+            <a href="../materias/materias.html">Materias</a>
+            <a href="../alumnos/alumnos.html">Alumnos</a>
+        </nav>
+        <img src="../../assets/img/mascota.png" alt="Mascota" class="menu-mascota">
+        <div class="top-menu-right">
+            <div class="user-dropdown">
+                <div class="user-avatar">A</div>
+                <span>Admin</span>
+            </div>
+            <a href="../../index.html" class="logout-btn" onclick="logout()">Cerrar Sesion</a>
+        </div>
+    </header>
+
+    <main class="main-content">
+        <!-- Buscador -->
+        <div class="search-section">
+            <div class="search-box-large">
+                <span class="search-icon">🔍</span>
+                <input type="text" id="searchDocente" placeholder="Buscar docente..." oninput="filtrarDocentes(this.value)">
+            </div>
+        </div>
+
+        <div class="content-grid">
+            <!-- Panel Izquierdo: Lista de Docentes -->
+            <div class="panel teachers-panel">
+                <div class="panel-header">
+                    <h2>Docentes</h2>
+                    <span class="badge-count" id="teacherCount">0</span>
+                </div>
+                <ul class="teacher-list" id="teacherList"></ul>
+            </div>
+
+            <!-- Panel Derecho: Info del Docente -->
+            <div class="panel docente-panel">
+                <div id="docenteDetail">
+                    <p class="info-placeholder">Selecciona un docente de la lista</p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="docentes.js"></script>
+    <script>
+        if (localStorage.getItem('loggedIn') !== 'true') {
+            window.location.href = '../../index.html';
+        }
+
+        function logout() {
+            localStorage.removeItem('loggedIn');
+            localStorage.removeItem('userEmail');
+            window.location.href = '../../index.html';
+        }
+    </script>
+</body>
+</html>

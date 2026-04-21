@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Materias - RIBEL</title>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="../../assets/css/global.css" rel="stylesheet">
+    <link href="materias.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Top Menu -->
+    <header class="top-menu">
+        <div class="top-menu-left">
+            <h1 class="logo">RIBEL</h1>
+        </div>
+        <nav class="top-menu-nav">
+            <a href="../docentes/docentes.html">Docentes</a>
+            <a href="#" class="active">Materias</a>
+            <a href="../alumnos/alumnos.html">Alumnos</a>
+        </nav>
+        <img src="../../assets/img/mascota.png" alt="Mascota" class="menu-mascota">
+        <div class="top-menu-right">
+            <div class="user-dropdown">
+                <div class="user-avatar">A</div>
+                <span>Admin</span>
+            </div>
+            <a href="../../index.html" class="logout-btn" onclick="logout()">Cerrar Sesion</a>
+        </div>
+    </header>
+
+    <main class="main-content">
+        
+        <div class="page-header-custom">
+            <div class="header-left">
+                <h1>Gestion de Materias</h1>
+            </div>
+            <div class="header-right">
+                <button class="btn-new-primary" onclick="openModal()">
+                    + Nueva Materia
+                </button>
+            </div>
+        </div>
+
+        
+        <div class="filters-bar">
+            <div class="search-input">
+                <span class="search-icon">🔍</span>
+                <input type="text" id="searchMateria" placeholder="Buscar materia..." oninput="filtrarMaterias()">
+            </div>
+            <select id="filterCarrera" onchange="filtrarMaterias()">
+                <option value="">Todas las carreras</option>
+                <option value="Ing. Software">Ing. Software</option>
+                <option value="Ing. Industrial">Ing. Industrial</option>
+                <option value="General">General</option>
+            </select>
+            <select id="filterSemestre" onchange="filtrarMaterias()">
+                <option value="">Todos los semestres</option>
+                <option value="1">1° Semestre</option>
+                <option value="2">2° Semestre</option>
+                <option value="3">3° Semestre</option>
+                <option value="4">4° Semestre</option>
+                <option value="5">5° Semestre</option>
+                <option value="6">6° Semestre</option>
+                <option value="7">7° Semestre</option>
+            </select>
+        </div>
+
+        <!-- Formulario -->
+        <div class="form-section" id="formSection">
+            <div class="form-card">
+                <h2>Registrar Nueva Materia</h2>
+                <form id="materiaForm">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Nombre de la Materia</label>
+                            <input type="text" id="nombreMateria" placeholder="Ej: Programacion Web" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Codigo</label>
+                            <input type="text" id="codigoMateria" placeholder="Ej: PW" required>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Descripcion</label>
+                            <input type="text" id="descripcionMateria" placeholder="Descripcion de la materia">
+                        </div>
+                        <div class="form-group">
+                            <label>Docente Asignado</label>
+                            <select id="docenteMateria">
+                                <option value="">Seleccionar docente...</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Creditos</label>
+                            <input type="number" id="creditosMateria" placeholder="Ej: 4" min="1" max="10">
+                        </div>
+                        <div class="form-group">
+                            <label>Semestre</label>
+                            <select id="semestreMateria">
+                                <option value="1">1er Semestre</option>
+                                <option value="2">2do Semestre</option>
+                                <option value="3">3er Semestre</option>
+                                <option value="4">4to Semestre</option>
+                                <option value="5">5to Semestre</option>
+                                <option value="6">6to Semestre</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-actions">
+                        <button type="button" class="btn-cancel" onclick="closeForm()">Cancelar</button>
+                        <button type="submit" class="btn-save">Guardar Materia</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        
+        <div class="materias-grid" id="materiasGrid"></div>
+    </main>
+
+    <script src="materias.js"></script>
+    <script>
+        if (localStorage.getItem('loggedIn') !== 'true') {
+            window.location.href = '../../index.html';
+        }
+
+        function logout() {
+            localStorage.removeItem('loggedIn');
+            localStorage.removeItem('userEmail');
+            window.location.href = '../../index.html';
+        }
+
+        function openModal() {
+            document.getElementById('formSection').classList.add('show');
+            loadDocentes();
+        }
+
+        function closeForm() {
+            document.getElementById('formSection').classList.remove('show');
+            document.getElementById('materiaForm').reset();
+        }
+
+        function loadDocentes() {
+            const select = document.getElementById('docenteMateria');
+            select.innerHTML = '<option value="">Seleccionar docente...</option>';
+            
+            const docentes = [
+                { nombre: "Prof. Jirafales" },
+                { nombre: "Mrs. Penelope Puff" },
+                { nombre: "Denzel Quincy Crocker" },
+                { nombre: "Winifred Fowl" },
+                { nombre: "Agatha Tronchatoro" }
+            ];
+            
+            docentes.forEach(d => {
+                const option = document.createElement('option');
+                option.value = d.nombre;
+                option.textContent = d.nombre;
+                select.appendChild(option);
+            });
+        }
+
+        document.getElementById('materiaForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const nuevaMateria = {
+                id: "m-" + Date.now(),
+                nombre: document.getElementById('nombreMateria').value,
+                codigo: document.getElementById('codigoMateria').value,
+                descripcion: document.getElementById('descripcionMateria').value,
+                docente: document.getElementById('docenteMateria').value,
+                foto: "../../assets/img/cabezon.jpg",
+                creditos: document.getElementById('creditosMateria').value,
+                semestre: document.getElementById('semestreMateria').value,
+                carrera: "General"
+            };
+            
+            materias.push(nuevaMateria);
+            renderMaterias();
+            closeForm();
+            alert('Materia guardada exitosamente!');
+        });
+    </script>
+</body>
+</html>

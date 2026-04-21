@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carga de Materias - RIBEL</title>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="../../assets/css/global.css" rel="stylesheet">
+    <link href="alumnos.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Top Menu -->
+    <header class="top-menu">
+        <div class="top-menu-left">
+            <h1 class="logo">RIBEL</h1>
+        </div>
+        <nav class="top-menu-nav">
+            <a href="../docentes/docentes.html">Docentes</a>
+            <a href="../materias/materias.html">Materias</a>
+            <a href="#" class="active">Alumnos</a>
+        </nav>
+        <img src="../../assets/img/mascota.png" alt="Mascota" class="menu-mascota">
+        <div class="top-menu-right">
+            <div class="user-dropdown">
+                <div class="user-avatar">A</div>
+                <span>Admin</span>
+            </div>
+            <a href="../../index.html" class="logout-btn" onclick="logout()">Cerrar Sesion</a>
+        </div>
+    </header>
+
+    <main class="main-content">
+        <!-- Filtros principales -->
+        <div class="filters-section">
+            <div class="filter-group">
+                <label>Carrera</label>
+                <select id="filterCarrera" onchange="updateFilters()">
+                    <option value="">Seleccionar...</option>
+                    <option value="Ing. Software">Ing. Software</option>
+                    <option value="Ing. Industrial">Ing. Industrial</option>
+                </select>
+            </div>
+            <div class="filter-group">
+                <label>Semestre</label>
+                <select id="filterSemestre" onchange="updateFilters()">
+                    <option value="">Seleccionar...</option>
+                    <option value="1">1° Semestre</option>
+                    <option value="2">2° Semestre</option>
+                    <option value="3">3° Semestre</option>
+                    <option value="4">4° Semestre</option>
+                    <option value="5">5° Semestre</option>
+                    <option value="6">6° Semestre</option>
+                    <option value="7">7° Semestre</option>
+                </select>
+            </div>
+            <div class="filter-group">
+                <label>Grupo</label>
+                <select id="filterGrupo" onchange="updateFilters()">
+                    <option value="">Seleccionar...</option>
+                    <option value="A">Grupo A</option>
+                    <option value="B">Grupo B</option>
+                    <option value="C">Grupo C</option>
+                </select>
+            </div>
+        </div>
+
+        <!-- Encabezado dinámico -->
+        <div class="context-header" id="contextHeader">
+            <span class="context-text">Selecciona carrera, semestre y grupo</span>
+        </div>
+
+        <!-- Grid de 2 columnas -->
+        <div class="content-grid">
+            <!-- Panel Izquierdo: Materias disponibles -->
+            <div class="panel">
+                <div class="panel-header">
+                    <h2>Materias Disponibles</h2>
+                    <span class="badge-count" id="availableCount">0</span>
+                </div>
+                <div class="subjects-grid" id="subjectsGrid"></div>
+            </div>
+
+            <!-- Panel Derecho: Materias seleccionadas -->
+            <div class="panel selected-panel">
+                <div class="panel-header">
+                    <h2>Materias Asignadas</h2>
+                    <span class="badge-count selected" id="selectedCount">0</span>
+                </div>
+                <div class="selected-list" id="selectedList">
+                    <p class="empty-message">Selecciona materias del panel izquierdo</p>
+                </div>
+                
+                <div class="summary-box">
+                    <div class="summary-row">
+                        <span>Total créditos:</span>
+                        <strong id="totalCreditos">0</strong>
+                    </div>
+                    <div class="summary-row">
+                        <span>Total materias:</span>
+                        <strong id="totalMaterias">0</strong>
+                    </div>
+                </div>
+
+                <button class="btn-save" onclick="guardarAsignacion()">
+                    Guardar Asignacion
+                </button>
+            </div>
+        </div>
+    </main>
+
+    <script src="alumnos.js"></script>
+    <script>
+        if (localStorage.getItem('loggedIn') !== 'true') {
+            window.location.href = '../../index.html';
+        }
+
+        function logout() {
+            localStorage.removeItem('loggedIn');
+            localStorage.removeItem('userEmail');
+            window.location.href = '../../index.html';
+        }
+    </script>
+</body>
+</html>
